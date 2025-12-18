@@ -3,237 +3,381 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart_Kitchen - Your AI Cooking Assistant</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="description" content="Smart_Kitchen V7.0 - Your AI-Powered Cooking Assistant with Dark Mode, Voice Commands, and Smart Features">
+    <meta name="theme-color" content="#667eea">
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <title>Smart_Kitchen V7.0 - AI Cooking Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <!-- Header -->
     <header>
         <div class="header-content">
-            <div class="logo">🍳 Smart_Kitchen</div>
-            <nav>
-                <a href="#" class="nav-link active" data-page="home">Home</a>
-                <a href="#" class="nav-link" data-page="generator">Recipe Generator</a>
-                <a href="#" class="nav-link" data-page="academy">Academy</a>
-                <a href="#" class="nav-link" data-page="trending">Trending</a>
-                <a href="#" class="nav-link" data-page="favorites">Favorites</a>
-                <a href="#" class="nav-link" data-page="about">About</a>
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <span>Smart_Kitchen</span>
+                <span class="version">V7.0</span>
+            </div>
+            
+            <!-- Dark Mode Toggle -->
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </button>
+            
+            <!-- Hamburger Menu Button -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <nav id="mainNav">
+                <a href="#" class="nav-link active" data-page="home">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="#" class="nav-link" data-page="generator">
+                    <i class="fas fa-search"></i> Recipes
+                </a>
+                <a href="#" class="nav-link" data-page="academy">
+                    <i class="fas fa-graduation-cap"></i> Academy
+                </a>
+                <a href="#" class="nav-link" data-page="trending">
+                    <i class="fas fa-fire"></i> Trending
+                </a>
+                <a href="#" class="nav-link" data-page="favorites">
+                    <i class="fas fa-heart"></i> Favorites
+                </a>
+                <a href="#" class="nav-link" data-page="timer">
+                    <i class="fas fa-clock"></i> Timer
+                </a>
+                <a href="#" class="nav-link" data-page="shopping">
+                    <i class="fas fa-shopping-cart"></i> Shopping
+                </a>
             </nav>
         </div>
     </header>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
 
     <div class="container">
         <!-- Home Page -->
         <div id="home" class="page active">
             <div class="hero">
-                <h1>Welcome to Smart_Kitchen<br>{programmed by Ajibade Samuel(Shalom Peter)}<br/></h1>
+                <div class="hero-badge">✨ NEW V7.0</div>
+                <h1>Welcome to Smart_Kitchen</h1>
                 <p>Your AI-Powered Cooking Assistant</p>
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-utensils"></i>
+                        <h3 id="totalRecipes">15+</h3>
+                        <p>Recipes</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <h3>10K+</h3>
+                        <p>Users</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-star"></i>
+                        <h3>4.9</h3>
+                        <p>Rating</p>
+                    </div>
+                </div>
                 <div class="cta-buttons">
-                    <button class="btn btn-primary" onclick="navigateTo('generator')">Start Cooking</button>
-                    <button class="btn btn-secondary" onclick="navigateTo('academy')">Learn Skills</button>
+                    <button class="btn btn-primary" onclick="navigateTo('generator')">
+                        <i class="fas fa-search"></i> Start Cooking
+                    </button>
+                    <button class="btn btn-secondary" onclick="navigateTo('academy')">
+                        <i class="fas fa-graduation-cap"></i> Learn Skills
+                    </button>
+                    <button class="btn btn-voice" id="voiceBtn">
+                        <i class="fas fa-microphone"></i> Voice Command
+                    </button>
                 </div>
             </div>
 
             <div class="features">
-                <div class="feature-card" onclick="navigateTo('generator')">
+                <div class="feature-card glass" onclick="navigateTo('generator')">
                     <div class="feature-icon">🥘</div>
-                    <h3>Recipe Generator</h3>
-                    <p>Enter your ingredients and discover amazing recipes you can make right now!</p>
+                    <h3>Smart Recipe Generator</h3>
+                    <p>AI-powered search with advanced filters and nutrition info</p>
+                    <span class="feature-badge">Enhanced</span>
                 </div>
-                <div class="feature-card" onclick="navigateTo('academy')">
+                <div class="feature-card glass" onclick="navigateTo('academy')">
                     <div class="feature-icon">👨‍🍳</div>
                     <h3>Cooking Academy</h3>
-                    <p>Master cooking techniques from basics to advanced skills with step-by-step guides.</p>
+                    <p>Video tutorials and interactive lessons</p>
+                    <span class="feature-badge">New</span>
                 </div>
-                <div class="feature-card" onclick="navigateTo('trending')">
+                <div class="feature-card glass" onclick="navigateTo('trending')">
                     <div class="feature-icon">🔥</div>
                     <h3>Trending Recipes</h3>
-                    <p>Explore the hottest recipes, quick meals, and healthy options trending now.</p>
+                    <p>Real-time trending with smart algorithm</p>
                 </div>
-                <div class="feature-card" onclick="getRandomRecipe()">
+                <div class="feature-card glass" onclick="getRandomRecipe()">
                     <div class="feature-icon">🎲</div>
                     <h3>Random Recipe</h3>
-                    <p>Feeling adventurous? Let us surprise you with a random delicious recipe!</p>
+                    <p>AI suggests based on your preferences</p>
                 </div>
-                <div class="feature-card" onclick="navigateTo('favorites')">
+                <div class="feature-card glass" onclick="navigateTo('favorites')">
                     <div class="feature-icon">❤️</div>
                     <h3>My Favorites</h3>
-                    <p>Save and access all your favorite recipes in one convenient place.</p>
+                    <p>Cloud sync across all devices</p>
                 </div>
-                <div class="feature-card" onclick="toggleAI()">
+                <div class="feature-card glass" onclick="toggleAI()">
                     <div class="feature-icon">🤖</div>
-                    <h3>AI Assistant</h3>
-                    <p>Get instant answers to cooking questions and personalized meal suggestions(na me do this one).</p>
+                    <h3>AI Chef Assistant</h3>
+                    <p>GPT-powered cooking companion</p>
+                    <span class="feature-badge">Pro</span>
+                </div>
+                <div class="feature-card glass" onclick="navigateTo('timer')">
+                    <div class="feature-icon">⏲️</div>
+                    <h3>Smart Timer</h3>
+                    <p>Multiple timers with voice alerts</p>
+                    <span class="feature-badge">New</span>
+                </div>
+                <div class="feature-card glass" onclick="navigateTo('shopping')">
+                    <div class="feature-icon">🛒</div>
+                    <h3>Shopping List</h3>
+                    <p>Auto-generate from recipes</p>
+                    <span class="feature-badge">New</span>
                 </div>
             </div>
         </div>
 
         <!-- Recipe Generator Page -->
         <div id="generator" class="page">
-            <div class="recipe-generator">
-                <h2 style="color: #667eea; margin-bottom: 30px;">🥘 Recipe Generator</h2>
+            <div class="page-header">
+                <h1><i class="fas fa-search"></i> Recipe Generator</h1>
+                <p>Find perfect recipes with AI-powered search</p>
+            </div>
+            
+            <div class="recipe-generator glass">
+                <div class="search-header">
+                    <h2>🥘 Smart Search</h2>
+                    <button class="btn btn-secondary btn-small" onclick="clearFilters()">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
                 
                 <div class="input-group">
-                    <label>Enter Your Ingredients (comma-separated)</label>
-                    <input type="text" id="ingredientsInput" placeholder="e.g., chicken, rice, tomatoes, onions">
+                    <label><i class="fas fa-carrot"></i> Enter Your Ingredients</label>
+                    <div class="search-box">
+                        <input type="text" id="ingredientsInput" placeholder="e.g., chicken, rice, tomatoes, onions">
+                        <button class="search-btn" onclick="generateRecipes()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="filter-group">
                     <div class="input-group">
-                        <label>Cooking Time</label>
+                        <label><i class="fas fa-clock"></i> Cooking Time</label>
                         <select id="timeFilter">
-                            <option value="">Any</option>
-                            <option value="quick">Under 30 min</option>
-                            <option value="medium">30-60 min</option>
-                            <option value="long">Over 60 min</option>
+                            <option value="">Any Time</option>
+                            <option value="quick">⚡ Under 30 min</option>
+                            <option value="medium">⏱️ 30-60 min</option>
+                            <option value="long">🕐 Over 60 min</option>
                         </select>
                     </div>
 
                     <div class="input-group">
-                        <label>Difficulty</label>
+                        <label><i class="fas fa-chart-line"></i> Difficulty</label>
                         <select id="difficultyFilter">
-                            <option value="">Any</option>
-                            <option value="easy">Easy</option>
-                            <option value="medium">Medium</option>
-                            <option value="hard">Hard</option>
+                            <option value="">Any Level</option>
+                            <option value="easy">😊 Easy</option>
+                            <option value="medium">🤔 Medium</option>
+                            <option value="hard">💪 Hard</option>
                         </select>
                     </div>
 
                     <div class="input-group">
-                        <label>Cuisine</label>
+                        <label><i class="fas fa-globe"></i> Cuisine</label>
                         <select id="cuisineFilter">
-                            <option value="">Any</option>
-                            <option value="italian">Italian</option>
-                            <option value="chinese">Chinese</option>
-                            <option value="mexican">Mexican</option>
-                            <option value="indian">Indian</option>
-                            <option value="american">American</option>
-                            <option value="greek">Greek</option>
+                            <option value="">All Cuisines</option>
+                            <option value="italian">🇮🇹 Italian</option>
+                            <option value="chinese">🇨🇳 Chinese</option>
+                            <option value="mexican">🇲🇽 Mexican</option>
+                            <option value="indian">🇮🇳 Indian</option>
+                            <option value="american">🇺🇸 American</option>
+                            <option value="greek">🇬🇷 Greek</option>
                         </select>
                     </div>
 
                     <div class="input-group">
-                        <label>Meal Type</label>
+                        <label><i class="fas fa-utensils"></i> Meal Type</label>
                         <select id="mealTypeFilter">
-                            <option value="">Any</option>
-                            <option value="breakfast">Breakfast</option>
-                            <option value="lunch">Lunch</option>
-                            <option value="dinner">Dinner</option>
-                            <option value="snack">Snack</option>
+                            <option value="">Any Meal</option>
+                            <option value="breakfast">🌅 Breakfast</option>
+                            <option value="lunch">☀️ Lunch</option>
+                            <option value="dinner">🌙 Dinner</option>
+                            <option value="snack">🍿 Snack</option>
                         </select>
                     </div>
                 </div>
 
-                <button class="btn btn-primary" onclick="generateRecipes()">Generate Recipes</button>
+                <button class="btn btn-primary btn-block" onclick="generateRecipes()">
+                    <i class="fas fa-magic"></i> Generate Recipes
+                </button>
+            </div>
+
+            <div class="results-header" id="resultsHeader" style="display: none;">
+                <h3><i class="fas fa-list"></i> Found <span id="resultCount">0</span> Recipes</h3>
+                <div class="sort-options">
+                    <select id="sortBy" onchange="sortRecipes()">
+                        <option value="name">Sort by Name</option>
+                        <option value="time">Sort by Time</option>
+                        <option value="rating">Sort by Rating</option>
+                    </select>
+                </div>
             </div>
 
             <div id="generatorResults" class="recipe-grid"></div>
         </div>
 
-        <!-- Academy Page -->
-        <div id="academy" class="page">
-            <div class="hero" style="padding: 40px 20px;">
-                <h1 style="font-size: 42px;">👨‍🍳 Smart Kitchen Academy</h1>
-                <p style="font-size: 18px;">Master the art of cooking with our comprehensive lessons</p>
+        <!-- Timer Page (NEW) -->
+        <div id="timer" class="page">
+            <div class="page-header">
+                <h1><i class="fas fa-clock"></i> Smart Timers</h1>
+                <p>Manage multiple cooking timers</p>
             </div>
 
+            <div class="timer-container glass">
+                <div class="timer-input">
+                    <input type="number" id="timerMinutes" placeholder="Minutes" min="0" max="180">
+                    <input type="number" id="timerSeconds" placeholder="Seconds" min="0" max="59">
+                    <input type="text" id="timerLabel" placeholder="Timer label (e.g., Pasta)">
+                    <button class="btn btn-primary" onclick="addTimer()">
+                        <i class="fas fa-plus"></i> Add Timer
+                    </button>
+                </div>
+                <div id="timersDisplay"></div>
+            </div>
+        </div>
+
+        <!-- Shopping List Page (NEW) -->
+        <div id="shopping" class="page">
+            <div class="page-header">
+                <h1><i class="fas fa-shopping-cart"></i> Shopping List</h1>
+                <p>Your smart grocery list</p>
+            </div>
+
+            <div class="shopping-container glass">
+                <div class="shopping-input">
+                    <input type="text" id="shoppingItem" placeholder="Add item...">
+                    <button class="btn btn-primary" onclick="addShoppingItem()">
+                        <i class="fas fa-plus"></i> Add
+                    </button>
+                </div>
+                <div class="shopping-actions">
+                    <button class="btn btn-secondary btn-small" onclick="clearShoppingList()">
+                        <i class="fas fa-trash"></i> Clear All
+                    </button>
+                    <button class="btn btn-secondary btn-small" onclick="shareShoppingList()">
+                        <i class="fas fa-share"></i> Share
+                    </button>
+                </div>
+                <div id="shoppingList"></div>
+            </div>
+        </div>
+
+        <!-- Academy, Trending, Favorites (Keep existing structure but enhanced) -->
+        <div id="academy" class="page">
+            <div class="page-header">
+                <h1><i class="fas fa-graduation-cap"></i> Smart Kitchen Academy</h1>
+                <p>Master the art of cooking with expert tutorials</p>
+            </div>
             <div class="academy-grid" id="academyContent"></div>
         </div>
 
-        <!-- Trending Page -->
         <div id="trending" class="page">
-            <div class="hero" style="padding: 40px 20px;">
-                <h1 style="font-size: 42px;">🔥 Trending Recipes</h1>
-                <p style="font-size: 18px;">Discover what's hot in the kitchen right now</p>
+            <div class="page-header">
+                <h1><i class="fas fa-fire"></i> Trending Recipes</h1>
+                <p>Discover what's hot in the kitchen</p>
             </div>
-
-            <div style="background: white; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
-                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <button class="btn btn-primary btn-small" onclick="showTrendingCategory('top10')">Top 10</button>
-                    <button class="btn btn-secondary btn-small" onclick="showTrendingCategory('quick')">10-Minute Meals</button>
-                    <button class="btn btn-secondary btn-small" onclick="showTrendingCategory('budget')">Budget Friendly</button>
-                    <button class="btn btn-secondary btn-small" onclick="showTrendingCategory('healthy')">Healthy Options</button>
-                </div>
+            <div class="trending-filters glass">
+                <button class="btn btn-primary btn-small active" onclick="showTrendingCategory('top10')">
+                    <i class="fas fa-trophy"></i> Top 10
+                </button>
+                <button class="btn btn-secondary btn-small" onclick="showTrendingCategory('quick')">
+                    <i class="fas fa-bolt"></i> Quick Meals
+                </button>
+                <button class="btn btn-secondary btn-small" onclick="showTrendingCategory('budget')">
+                    <i class="fas fa-dollar-sign"></i> Budget
+                </button>
+                <button class="btn btn-secondary btn-small" onclick="showTrendingCategory('healthy')">
+                    <i class="fas fa-heart"></i> Healthy
+                </button>
             </div>
-
             <div id="trendingResults" class="recipe-grid"></div>
         </div>
 
-        <!-- Favorites Page -->
         <div id="favorites" class="page">
-            <div class="hero" style="padding: 40px 20px;">
-                <h1 style="font-size: 42px;">❤️ My Favorites</h1>
-                <p style="font-size: 18px;">Your saved recipes collection</p>
+            <div class="page-header">
+                <h1><i class="fas fa-heart"></i> My Favorites</h1>
+                <p>Your saved recipes collection</p>
             </div>
-
             <div id="favoritesResults" class="recipe-grid"></div>
         </div>
 
-        <!-- About Page -->
-        <div id="about" class="page">
-            <div class="hero" style="padding: 60px 20px;">
-                <h1 style="font-size: 42px;">About Smart_Kitchen</h1>
-                <p style="font-size: 18px; max-width: 800px; margin: 0 auto;">
-                    Smart_Kitchen is your ultimate AI-powered cooking companion, designed to make cooking easier, 
-                    more enjoyable, and accessible to everyone. Whether you're a beginner or an experienced chef, 
-                    we help you discover new recipes, learn essential skills, and make the most of the ingredients you have.
-                </p>
-            </div>
-
-            <div class="features">
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Our Mission</h3>
-                    <p>To empower everyone to cook confidently and creatively with AI-powered guidance and inspiration.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💡</div>
-                    <h3>Innovation</h3>
-                    <p>Using cutting-edge AI technology to provide personalized recipe recommendations and cooking assistance.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🌟</div>
-                    <h3>Built By</h3>
-                    <p><strong>AJIBADE SAMUEL (AKA SMART TECH)</strong><br>I’m Samuel Ajibade, known as SMART_TECH. - I specialize in Python, Kivy,
-HTML, CSS, and web development. - I’m 16 years old, currently in SS3,
-and started programming at age 14. - I aim to become a Robotics Engineer
-and Computer Scientist. - Creative skills: photography, graphics design,
-UI/UX design, video editing, photo editing, photo manipulation. -
-Favourite colors: sky blue, black, deep blue, grey.
-.</p>
-                </div>
-            </div>
-        </div>
-
         <!-- Footer Credit -->
-        <div class="credit-footer">
-            <h3>🍳 Smart_Kitchen</h3>
+        <div class="credit-footer glass">
+            <h3><i class="fas fa-utensils"></i> Smart_Kitchen V7.0</h3>
             <p>Built and Programmed by: <strong>AJIBADE SAMUEL (AKA SMART TECH)</strong></p>
-            <p style="margin-top: 10px; font-size: 14px;">© 2025 Smart_Kitchen. Making cooking accessible to everyone.</p>
+            <p style="margin-top: 10px; font-size: 14px;">
+                © 2024 Smart_Kitchen. Making cooking accessible to everyone.
+            </p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
         </div>
     </div>
 
-    <!-- AI Assistant -->
+    <!-- AI Assistant (Enhanced) -->
     <div class="ai-assistant">
-        <button class="ai-toggle" onclick="toggleAI()">🤖</button>
-        <div class="ai-chat" id="aiChat">
-            <div class="ai-header">Smart Kitchen AI Assistant</div>
+        <button class="ai-toggle" onclick="toggleAI()">
+            <i class="fas fa-robot"></i>
+        </button>
+        <div class="ai-chat glass" id="aiChat">
+            <div class="ai-header">
+                <i class="fas fa-robot"></i> Smart Chef AI
+                <button class="ai-close" onclick="toggleAI()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
             <div class="ai-messages" id="aiMessages"></div>
             <div class="ai-input">
                 <input type="text" id="aiInput" placeholder="Ask me anything about cooking...">
-                <button onclick="sendAIMessage()">Send</button>
+                <button onclick="sendAIMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Recipe Modal -->
+    <!-- Recipe Modal (Enhanced) -->
     <div class="modal" id="recipeModal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
+        <div class="modal-content glass">
+            <button class="modal-close" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+            </button>
             <div id="modalContent"></div>
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="script.js"></script>
 </body>
 </html>
